@@ -5,12 +5,14 @@ window.Instagram = {
     config: {},
 
     BASE_URL: 'https://api.instagram.com/v1',
-
+   
     init: function (opt) {
         opt = opt || {};
 
         this.config.client_id = opt.client_id;
     },
+    
+    
 
     /**
      * Get a list of popular media.
@@ -72,26 +74,26 @@ $(document).ready(function () {
         e.preventDefault();
 
         var userName = $('#search').val();
-
+         console.log(userName);
         Instagram.searchbyname(userName, function (response) {
             var $instagram = $('#instagram');
             $instagram.html('');
 
             for (var i = 0; i < response.data.length; i++) {
 
-                currusername = response.data[i].username;
+                var currusername = response.data[i].full_name;
+                 console.log(currusername);
                 if (currusername == userName) {
                     UserID = response.data[i].id;
 
                     Instagram.tagsByName(UserID, function (response) {
                         var $instagram = $('#instagram');
                         $instagram.html('');
-
                         for (var i = 0; i < response.data.length; i++) {
                             imageUrl = response.data[i].images.low_resolution.url;
                             $instagram.append('<img src="' + imageUrl + '" />');
                         }
-                      
+                     
                     });
                 }
 
